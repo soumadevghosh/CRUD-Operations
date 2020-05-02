@@ -1,10 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<link href="webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet" />
+<script src="webjars/jquery/3.2.1/jquery.js" type="text/javascript" ></script>
+<script src="webjars/bootstrap/4.3.1/js/bootstrap.js" type="text/javascript" ></script>
+<script src="../static/js/nationality.js" type="text/javascript" th:src="@{js/nationality.js}"></script>
 <title>Nationalities</title>
 </head>
 <body>
 
+<div class="container">
+<button class="btn btn-warning btn-block" id="addNew">Add new</button>
+	<div class="table-responsive">
+          <table id="tblNationalities" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Country</th>
+                        <th>Capital</th>
+                        <th>Updated By</th>
+                        <th>Updated On</th> 
+                        <th>Edit</th>    
+                        <th>Delete</th>               
+                    </tr>
+                 </thead>
+                 <tbody id="tbodyNationalities">
+                    <tr th:each="nationality:${Nationalities}">
+                            <td th:text="${nationality.Id}" id="hdnId">Id</td>
+                            <td th:text="${nationality.name}">Name</td>
+                            <td th:text="${nationality.country}">Country</td>
+                            <td th:text="${nationality.capital}">Capital</td>
+                            <td th:text="${nationality.updatedBy}">UpdatedBy</td>
+                            <td th:text="${nationality.updatedOn}">UpdatedOn</td>
+                            <td><a th:href="@{/getNationalityById/(Id=${nationality.Id})}" class="btn btn-primary editButton">Edit</a></td>
+                            <td><a th:href="@{/delete/(Id=${nationality.Id})}" class="btn btn-danger deleteButton">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+     </div>	
+</div>  
+
+
+<div class="modal fade" id="nationalityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+     <form th:action="@{/addNew}" method="post">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Add New</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+
+        <div class="md-form mb-2">
+          <label for="Id" class="col-form-label">Id:</label>
+          <input type="text" class="form-control" id="txtId" name="id"/>
+        </div>
+        <div class="md-form mb-2">
+          <label for="name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="txtname" name="name"/>
+        </div>
+         <div class="md-form mb-2">
+          <label for="country" class="col-form-label">Country:</label>
+          <input type="text" class="form-control" id="txtcountry" name="country"/>
+        </div>
+         <div class="md-form mb-2">
+          <label for="capital" class="col-form-label">Capital:</label>
+          <input type="text" class="form-control" id="txtcapital" name="capital"/>
+        </div>
+		<div class="md-form mb-2">
+          <label for="updatedBy" class="col-form-label">Updated By:</label>
+          <input type="text" class="form-control" id="txtupdatedBy" name="updatedBy"/>
+        </div>
+        <div class="md-form mb-2">
+          <label for="updatedOn" class="col-form-label">Updated On:</label>
+          <input type="text" class="form-control" id="txtupdatedOn" name="updatedOn"/>
+        </div>
+     
+      </div>
+      
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="submit" class="btn btn-success"  id="btnAddNationalities">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="nationalityEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+     <form th:action="@{/update}" method="put">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Update</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+
+        <div class="md-form mb-2">
+          <label for="Id" class="col-form-label">Id:</label>
+          <input type="text" class="form-control" id="txtIdEdit" name="id"/>
+        </div>
+        <div class="md-form mb-2">
+          <label for="name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="txtnameEdit" name="name"/>
+        </div>
+         <div class="md-form mb-2">
+          <label for="country" class="col-form-label">Country:</label>
+          <input type="text" class="form-control" id="txtcountryEdit" name="country"/>
+        </div>
+         <div class="md-form mb-2">
+          <label for="capital" class="col-form-label">Capital:</label>
+          <input type="text" class="form-control" id="txtcapitalEdit" name="capital"/>
+        </div>
+		<div class="md-form mb-2">
+          <label for="updatedBy" class="col-form-label">Updated By:</label>
+          <input type="text" class="form-control" id="txtupdatedByEdit" name="updatedBy"/>
+        </div>
+        <div class="md-form mb-2">
+          <label for="updatedOn" class="col-form-label">Updated On:</label>
+          <input type="text" class="form-control" id="txtupdatedOnEdit" name="updatedOn"/>
+        </div>
+     
+      </div>
+      
+      <div class="modal-footer d-flex justify-content-center">
+        <button type ="submit" class="btn btn-warning" id="btnUpdateNationalities">Update</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class NationalityService
 	@Autowired
 	private NationalityRepository nRepository;
 	
-	public List<Nationality> getNationality(){
+	public List<Nationality> getNationalities(){
 		return (List<Nationality>) nRepository.findAll();
 	}
 	
