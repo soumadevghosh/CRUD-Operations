@@ -2,9 +2,10 @@ $(document).ready(function(){
 	
 });
 
-$(document).on("click",".editButton",function(event){
-	event.preventDefault();
+$(document).on("click",".editButton",function(e){
+	e.preventDefault();
 	var url= $(this).attr('href');
+
 	$.get(url,function(nationality, status){
 		$("#txtIdEdit").val(nationality.id);
 		$("#txtnameEdit").val(nationality.name);
@@ -13,11 +14,11 @@ $(document).on("click",".editButton",function(event){
 		$("#txtupdatedByEdit").val(nationality.updatedBy);
 		$("#txtupdatedOnEdit").val(nationality.updatedOn);
 	});
-	$('#nationalityEditModal').modal("show");
+	$("#nationalityEditModal").modal("show");
 });
 
 $(document).on("click","#addNew",function(event){
-	$('#nationalityModal').modal("show");
+	$("#nationalityModal").modal("show");
 });
 
 $(document).on("click",".deleteButton",function(e){
