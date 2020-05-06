@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.CrudSpringBoot.services.UserService;
 
 @Controller
-@RequestMapping("/Customer")
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping(value = "/userHome")
+	public String home(Model model) {
+		model.addAttribute("users", userService.getAllUsers());
+		return "users";
+	}
 	
 	@GetMapping(value = "/getUsers")
 	public Object getUsers(Model model) {
