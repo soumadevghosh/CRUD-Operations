@@ -18,8 +18,8 @@ public class UserService {
 		return (List<User>) userRepository.findAll();
 	}
 	
-	public Optional<User> getUserById(Integer Id) {
-		return userRepository.findById(Id);
+	public User getUserById(Integer Id) {
+		return userRepository.findById(Id).get();
 	}
 	
 	public void addNewUser(User user) {

@@ -2,60 +2,69 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<link href="webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet" />
-<script src="webjars/jquery/3.2.1/jquery.js" type="text/javascript" ></script>
-<script src="webjars/bootstrap/4.3.1/js/bootstrap.js" type="text/javascript" ></script>
+<link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet" />
+<link href="/webjars/datatables/1.10.19/css/jquery.dataTables.css" rel="stylesheet" />
+<script src="/webjars/jquery/3.4.1/jquery.js" type="text/javascript" ></script>
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.js" type="text/javascript" ></script>
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.js" type="text/javascript" ></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/js/users.js" type="text/javascript" th:src="@{/js/users.js}"></script>
 
-<script src="../static/js/users.js" type="text/javascript" th:src="@{js/users.js}"></script>
 <title>Users</title>
 </head>
 <body>
-
 <div class="container">
-<button class="btn btn-warning btn-block" id="addNew">Add new</button>
-	<div class="table-responsive">
-          <table id="tblUsers" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th style="display:none;">Id</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Phone No.</th> 
-                        <th>Edit</th>    
-                        <th>Delete</th>               
-                    </tr>
-                 </thead>
-                 <tbody id="tbodyUsers">
-                    <tr>
-                            <td class="hdnId" style="display:none;">Id</td>
-                            <td id="userName">Name</td>
-                            <td id="userName">Email</td>
-                            <td id="userName">Password</td>
-                            <td id="userName">Phone</td>
-                            <td><a class="btn btn-primary btnEdit">Edit</a></td>
-                            <td><a class="btn btn-danger btnDelete">Delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-     </div>	
-</div>  
-
+	<div class="container-fluid">
+	    <div class="panel panel-default card-view ">
+	        <div class="panel-body">
+	            <p>
+	                <button type="button" class="btn btn-primary " id="btnAdd">Add New</button>
+	            </p>
+	            <input type="hidden" id="hdnUserId" />
+	
+				<div class="table-responsive">
+			          <table id="tblUsers" class="table table-hover">
+			                <thead>
+			                    <tr>
+			                        <th style="display:none;">Id</th>
+			                        <th>Name</th>
+			                        <th>Email</th>
+			                        <th>Password</th>
+			                        <th>Phone No.</th>   
+			                        <th>Delete</th>               
+			                    </tr>
+			                 </thead>
+			                 <tbody id="tbodyUsers">
+			                    <tr th:each="user:${users}">
+			                            <td th:text="${user.Id}" class="hdnId" style="display:none;">Id</td>
+			                            <td th:text="${user.name}" id="userName">Name</td>
+			                            <td th:text="${user.email}" id="userEmail">Email</td>
+			                            <td th:text="${user.password}" id="userPassword">Password</td>
+			                            <td th:text="${user.phoneno}" id="userPhone">Phone</td>
+			                            <td><button type="button" class="btn btn-danger btnDelete">Delete</button></td>
+			                    </tr>
+			                </tbody>
+			            </table>
+			     </div>
+	     	</div>
+	     </div>	
+	</div>  
+</div>
 
 <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
-     <form id="frmUser" method="post">
+     <form id="frmUser">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Title</h4>
+        <h4 class="modal-title w-100 font-weight-bold"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body mx-3">
 
-        <div class="md-form mb-2">
+        <div class="md-form mb-2" style="display:none;">
           <label for="Id" class="col-form-label">Id:</label>
           <input type="text" class="form-control" id="txtId" name="id"/>
         </div>
@@ -65,22 +74,22 @@
         </div>
          <div class="md-form mb-2">
           <label for="email" class="col-form-label">Email Id:</label>
-          <input type="text" class="form-control" id="txtEmail" name="country"/>
+          <input type="text" class="form-control" id="txtEmail" name="email"/>
         </div>
          <div class="md-form mb-2">
           <label for="password" class="col-form-label">Password:</label>
-          <input type="text" class="form-control" id="txtPassword" name="capital"/>
+          <input type="text" class="form-control" id="txtPassword" name="password"/>
         </div>
 		<div class="md-form mb-2">
           <label for="phoneno" class="col-form-label">Phone No.:</label>
-          <input type="text" class="form-control" id="txtPhone" name="updatedBy"/>
+          <input type="text" class="form-control" id="txtPhone" name="phoneno"/>
         </div>
      
       </div>
       
       <div class="modal-footer d-flex justify-content-center">
         <button type="submit" class="btn btn-success"  id="btnAddUser">Save</button>
-        <button type="submit" class="btn btn-primary"  id="btnUpdateUser" style="display:none;">Save</button>
+        <button type="submit" class="btn btn-primary"  id="btnUpdateUser" style="display:none;">Update</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
       </form>

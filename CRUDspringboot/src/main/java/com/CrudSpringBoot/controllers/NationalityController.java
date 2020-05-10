@@ -24,7 +24,7 @@ public class NationalityController
 	{
 		model.addAttribute("Nationalities", nService.getNationalities());
 		return "nationalities";
-	}
+	} 
 
 	@RequestMapping("/getNationalityById")
 	@ResponseBody
