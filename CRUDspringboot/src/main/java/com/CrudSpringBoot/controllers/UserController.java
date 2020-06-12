@@ -1,5 +1,6 @@
 package com.CrudSpringBoot.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<String> saveUsers(@RequestBody User user) {
 		userService.addNewUser(user);
-		return new ResponseEntity<>("Success",HttpStatus.OK);		
+		return new ResponseEntity<String>("Success",HttpStatus.OK);		
 	}
 	
 	@RequestMapping(value="getUserById",method = {RequestMethod.GET,RequestMethod.POST})

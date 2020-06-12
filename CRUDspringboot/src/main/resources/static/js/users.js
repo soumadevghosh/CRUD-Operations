@@ -12,7 +12,9 @@ $(function () {
 });
 
 $(document).on("click","#tbodyUsers tr td", function(){
-	
+	if ($(this).is("td:last-child")) {
+        return;
+    }
 	$("#btnAddUser").hide();
 	$("#btnUpdateUser").show();
 	
@@ -21,9 +23,8 @@ $(document).on("click","#tbodyUsers tr td", function(){
         type: "POST",
         url: "/user/getUserById",
         data: JSON.stringify(userId),
-        headers: {"Content-Type":"application/json",
-    		"Accept":"application/json"
-        },
+        contentType: "application/json",
+    	dataType: "json",
         success: function (data) {
             if (data != null) {
             	$(".modal-title").html("Edit User Details");
@@ -64,7 +65,7 @@ $(document).on("click","#btnAddUser",function(){
         type: "POST",
         url: "/user/save",
         contentType: "application/json",
-        dataType:"text",
+        dataType:"json",
         data: JSON.stringify(userObj),
         success: function (data) {
                 swal({
@@ -72,7 +73,7 @@ $(document).on("click","#btnAddUser",function(){
                     text: data,
                     icon: "success"
                 }).then(function () {
-                	window.location.reload();
+                	location.reload(true);
                  });                       
             
             console.log(data);
